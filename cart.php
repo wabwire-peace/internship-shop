@@ -94,7 +94,7 @@
         } 
 
         else {
-            echo "<tr><td>Your cart is empty.</td></tr>";
+            echo "<tr><td><b>Your cart is empty.</b></td></tr>";
         }
         ?>
 
@@ -118,7 +118,7 @@
             </ul>
             <!-- <form action="save_cart.php" method="post"> -->
             <!-- <input type="submit" name="save_cart" value="Save Cart">    -->
-            <button type="submit" name="save_cart" value="Save Cart" class="btn btn-primary">Save Cart</button>';
+            <button type="submit" name="save_cart" value="Save Cart" class="btn btn-primary">Save Cart</button>
             <input type="hidden" name="action" value="save">
             <!-- <button type='submit' name='save changes' >Save Changes</button> -->
             <!-- <a href="index.php" name='save changes'>Save Changes</a> -->
