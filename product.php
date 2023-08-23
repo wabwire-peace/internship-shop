@@ -1,150 +1,45 @@
-    <?php 
-    include("header.php");
-    echo "<br>";
+<?php 
+include("header.php"); // The code is including the header.php file, which contains the HTML header and navigation
 
-    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-        $productId = $_GET['id'];
-        $query = "SELECT * FROM products WHERE product_id = $productId";
-        $result = $conn->query($query);   
+if (isset($_GET['id']) && is_numeric($_GET['id'])) { // I am checking if the parameter received from the request exists and is numeric 
+    
+    
+    $query = "SELECT * FROM products WHERE product_id='".$_GET['id']."'"; // I am constructing a query to fetch product information based on the product_id received
+    $result = $conn->query($query); //  I am executing the query using the database connection and storing the result
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            echo "<h1>" . $row['product_name'] . "</h1>";
-            echo "<img src='" . $row['product_image'] . "' alt='Product Image' width='200'>";
-            echo "<p>SKU: " . $row['sku'] . "</p>";
-            echo "<p>Description: " . $row['product_description'] . "</p>";
-            echo "<p>Price: $" . $row['product_price'] . "</p>";
-            echo "<form action='cart.php' method='get'>";
-            echo "<label for='quantity'>Quantity:</label>";
-            echo "<input type='number' id='quantity' name='quantity' value='1' min='1'>";
-            echo "<input type='hidden' name='id' value='" . $row['product_id'] . "'>";
-            echo "<button type='submit' name='add_to_cart'>Add to Cart</button>";
-            echo "</form>";
-        } else {
-            echo "Product not found.";
+    if ($result->num_rows > 0) {  // I am checking if there are rows (products) returned from the database
+        while ($row = $result->fetch_assoc()) { // I am looping through each row (product) in the result
+
+         // I am displaying the product information within a container
+            echo '<div class="container text-center"> 
+                <div class="row">
+                    <div class="col col-image">
+                        <img src="' . $row['product_image'] . '" width="500" height="600" alt="Product Image" class="product-image">
+                    </div>
+                    <div class="col col-info">
+                        <h1>' . $row['product_name'] . '</h1>
+                        <div class="product-info">
+                            <form action="cart.php" method="get">
+                                <p><strong>Style:</strong> ' . $row['product_description'] . '</p>
+                                <p><strong>SKU:</strong> ' . $row['sku'] . '</p>
+                                <p><strong>Description:</strong> ' . $row['product_description'] . '</p>
+                                <p><strong>Price:</strong> ' . $row['product_price'] . ' Lei</p>
+                                <label for="quantity"><strong>Quantity:</strong></label>
+                                <input type="number" id="quantity" name="quantity" value="1" min="1">
+                                <input type="hidden" name="id" value="' . $row['product_id'] . '">
+                                <button type="submit" name="add_to_cart" value="Add to Cart" class="btn btn-primary">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>';
         }
     } else {
-        echo "<table border = '1'>";        
-        echo "<tr>";                       
-        echo "<th>Product Name</th>";
-        echo "<tr>";
-        echo "<td>Blouse:</td>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<td>Tshirt: </td>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<td>Trouser: </td>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<td>Dress: </td>";        
-        echo "</tr>";
-        echo "<tr>";
-        echo "<td>Jacket: </td>";
-        echo "</tr>";
-        echo "</table>";
-
-        echo "<br>";
-
-        echo '<a href="cart.php" id="cart">Go to Cart</a>';
-
-        echo "<br>";
+        echo "No products found."; // I am displaying a message when there are no products found for the given id
     }
+} else {
+    echo 'product id is not correct.'; // I am displaying an error message when product id does not exist or is not a valid numeric value
+}
 
-    // mysqli_close($conn);
-
-    include("footer.php");
-    ?>
-
-    <main>
-  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-    <div class="col-md-6 p-lg-5 mx-auto my-5">
-      <h1 class="display-3 fw-bold">Designed for engineers</h1>
-      <h3 class="fw-normal text-muted mb-3">Build anything you want with Aperture</h3>
-      <div class="d-flex gap-3 justify-content-center lead fw-normal">
-        <a class="icon-link" href="#">
-          Learn more
-          <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-        </a>
-        <a class="icon-link" href="#">
-          Buy
-          <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-        </a>
-      </div>
-    </div>
-    <div class="product-device shadow-sm d-none d-md-block"></div>
-    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-  </div>
-
-  <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-    <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-body-tertiary shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-    <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 p-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-  </div>
-
-  <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-    <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 p-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-    <div class="text-bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-body-tertiary shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-  </div>
-
-  <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-    <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 p-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-    <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-  </div>
-
-  <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-    <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 p-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-    <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
-      </div>
-      <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
-  </div>
-</main>
-   
-     
-    
-
+include("footer.php"); // I am including the footer.php external file to load some html 
+?>

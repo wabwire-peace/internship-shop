@@ -1,156 +1,91 @@
  <?php
 
-    include("header.php");
+    include("header.php");  // The code is including the header.php external file and load some html from it
 
-
-    // $billing_street = "";
-    // $billing_province = "";
-    // $billing_country = "";
-
-
-    // $shipping_street = "";   
-    // $shipping_province = "";
-    // $shipping_country = "";
-
-
+    // The code initialize variables for billing information
     $billing_first_name = "";
     $billing_last_name = "";
     $billing_email = "";
     $billing_address = "";
-    // $billing_address2 = "";
     $billing_country = "";
     $billing_state = "";
     $billing_zip = "";
 
-
+    // The code initialize variables for shipping information
     $shipping_first_name = "";
     $shipping_last_name = "";
     $shipping_email = "";
     $shipping_address = "";
-    // $shipping_address2 = "";
     $shipping_country = "";
     $shipping_state = "";
     $shipping_zip = "";
 
-    $errors = [];
+    $errors = []; // The code initialize errors array
 
-    if (isset($_POST['checkout'])) {
+    if (isset($_POST['checkout'])) { // Initialize an array to store validation errors
         $errors = [];
-        $namePattern = "/^[a-zA-Z]+$/";
+
+        // The code define regex patterns for validation
+        $namePattern = "/^[a-zA-Z\s]+$/";
+        $emailPattern = "/^.+@.+$/";
+        $zipPattern = "/^[a-zA-Z0-9\s]+$/";
         $provinceCountryPattern = "/^[a-zA-Z\s]+$/";
+
+        //This code retrieve billing information from POST data
         $billing_first_name = $_POST['billing_first_name'];
         $billing_last_name = $_POST['billing_last_name'];
         $billing_email = $_POST['billing_email'];
-        $billing_address = $_POST['billing_adress'];
+        $billing_address = $_POST['billing_address'];
+        $billing_country = $_POST['billing_country'];
         $billing_state = $_POST['billing_state'];
         $billing_zip = $_POST['billing_zip'];
-        // $billing_street = $_POST['billing_street'];
-        // $billing_province = $_POST['billing_province'];
-        // $billing_country = $_POST['billing_country'];
 
+        //This code retrieve billing information from POST data
         $shipping_first_name = $_POST['shipping_first_name'];
         $shipping_last_name = $_POST['shipping_last_name'];
         $shipping_email = $_POST['shipping_email'];
-        $shipping_address = $_POST['shipping_adress'];
+        $shipping_address = $_POST['shipping_address'];
+        $shipping_country = $_POST['shipping_country'];
         $shipping_state = $_POST['shipping_state'];
         $shipping_zip = $_POST['shipping_zip'];
-        // $shipping_street = $_POST['shipping_street'];
-        // $shipping_province = $_POST['shipping_province'];
-        // $shipping_country = $_POST['shipping_country'];
-
-            
-        if (!preg_match($namePattern, $billing_email)) {
-        $errors["billing_email"] = "Billing Email with @";
+        
+        //This code is validate billing information
+        if (!preg_match($emailPattern, $billing_email)) {
+            $errors["billing_email"] = "Billing Email should contain @";
         }
         if (empty($billing_email)) {
-        $errors["billing_email"] = "Billing email is required";
+            $errors["billing_email"] = "Billing email is required";
         }
 
         if (!preg_match($namePattern, $billing_first_name)) {
             $errors["billing_first_name"] = "Billing First Name without numbers";
         }
 
-        if (!preg_match($namePattern, $billing_last_name)) {
-            $errors["billing_last_name"] = "Billing Last Name without numbers";
-        }
-
-        if (!preg_match($namePattern, $shipping_first_name)) {
-            $errors["shipping_first_name"] = "Shipping First Name without numbers";
-        }
-
-        if (!preg_match($namePattern, $shipping_last_name)) {
-            $errors["shipping_last_name"] = "Shipping Last Name without numbers";
-        }
-
-        // if (!preg_match($provinceCountryPattern, $billing_province)) {
-        //     $errors["billing_province"] = "Billing Province without numbers";
-        // }
-
-        if (!preg_match($provinceCountryPattern, $billing_country)) {
-            $errors["billing_country"] = "Billing Country without numbers";
-        }
-
-        // if (!preg_match($provinceCountryPattern, $shipping_province)) {
-        //     $errors["shipping_province"] = "Shipping Province without numbers";
-        // }
-
-        if (!preg_match($provinceCountryPattern, $shipping_country)) {
-            $errors["shipping_country"] = "Shipping Country without numbers";
-        }
-
         if (empty($billing_first_name)) {
             $errors["billing_first_name"] = "Billing First Name is required";
+        }
+
+        if (!preg_match($namePattern, $billing_last_name)) {
+            $errors["billing_last_name"] = "Billing Last Name without numbers";
         }
 
         if (empty($billing_last_name)) {
             $errors["billing_last_name"] = "Billing Last Name is required";
         }
 
-        // if (empty($billing_street)) {
-        //     $errors["billing_street"] = "Billing Street is required";
-        // }
-
-        // if (empty($billing_province)) {
-        //     $errors["billing_province"] = "Billing Province is required";
-        // }
+        if (!preg_match($provinceCountryPattern, $billing_country)) {
+            $errors["billing_country"] = "Billing Country without numbers";
+        }
 
         if (empty($billing_country)) {
             $errors["billing_country"] = "Billing Country is required";
         }
 
-        if (empty($shipping_first_name)) {
-            $errors["shipping_first_name"] = "Shipping First Name is required";
-        }
-
-        if (empty($shipping_last_name)) {
-            $errors["shipping_last_name"] = "Shipping Last Name is required";
-        }
-
-        // if (empty($shipping_street)) {
-        //     $errors["shipping_street"] = "Shipping Street is required";
-        // }
-
-        // if (empty($shipping_province)) {
-        //     $errors["shipping_province"] = "Shipping Province is required";
-        // }
-
-        if (empty($shipping_country)) {
-            $errors["shipping_country"] = "Shipping Country is required";
-        }
-
-        if (!preg_match($namePattern, $billing_email)) {
-            $errors["billing_email"] = "Billing Email with @";
-        }
-        if (empty($billing_first_name)) {
-            $errors["billing_first_name"] = "Billing email is required";
-        }
-
-
         if (!preg_match($namePattern, $billing_address)) {
-            $errors["billing_address"] = "Billing Adress without numbers";
+            $errors["billing_address"] = "Billing Address without numbers";
         }
         if (empty($billing_address)) {
-            $errors["billing_address"] = "Billing Adress is required";
+            $errors["billing_address"] = "Billing Address is required";
         }
 
         if (!preg_match($namePattern, $billing_state)) {
@@ -160,63 +95,82 @@
             $errors["billing_state"] = "Billing State is required";
         }
 
-        if (!preg_match($namePattern, $billing_zip)) {
-            $errors["billing_zip"] = "Billing State with numbers";
+        if (!preg_match($zipPattern, $billing_zip)) {
+            $errors["billing_zip"] = "Billing Zip with numbers";
         }
         if (empty($billing_state)) {
             $errors["billing_state"] = "Billing Zip is required";
         }
 
-        
-
-        if (!preg_match($namePattern, $shipping_email)) {
-            $errors["shipping_email"] = "shipping Email with @";
+        if (!preg_match($namePattern, $shipping_first_name)) {
+            $errors["shipping_first_name"] = "Shipping First Name without numbers";
         }
+
         if (empty($shipping_first_name)) {
-            $errors["shipping_first_name"] = "shipping email is required";
+            $errors["shipping_first_name"] = "Shipping First Name is required";
         }
 
+        if (!preg_match($namePattern, $shipping_last_name)) {
+            $errors["shipping_last_name"] = "Shipping Last Name without numbers";
+        }
+        
+        if (empty($shipping_last_name)) {
+            $errors["shipping_last_name"] = "Shipping Last Name is required";
+        }
+
+        if (!preg_match($provinceCountryPattern, $shipping_country)) {
+            $errors["shipping_country"] = "Shipping Country without numbers";
+        }                
+
+        if (empty($shipping_country)) {
+            $errors["shipping_country"] = "Shipping Country is required";
+        }
+
+        if (!preg_match($emailPattern, $shipping_email)) {
+            $errors["shipping_email"] = "Shipping Email with @";
+        }              
+
+        if (empty($shipping_email)) {
+            $errors["shipping_email"] = "shipping email is required";
+        }
 
         if (!preg_match($namePattern, $shipping_address)) {
-            $errors["shipping_address"] = "shipping Adress without numbers";
+            $errors["shipping_address"] = "shipping Address without numbers";
         }
-        if (empty($billing_address)) {
-            $errors["shipping_address"] = "shipping Adress is required";
+
+        if (empty($shipping_address)) {
+            $errors["shipping_address"] = "shipping Address is required";
         }
 
         if (!preg_match($namePattern, $shipping_state)) {
             $errors["shipping_state"] = "shipping State without numbers";
         }
-        if (empty($billing_state)) {
-            $errors["billing_state"] = "Billing State is required";
-        }
-
-        if (!preg_match($namePattern, $shipping_zip)) {
-            $errors["shipping_zip"] = "shipping State with numbers";
-        }
+        
         if (empty($shipping_state)) {
-            $errors["shipping_state"] = "shipping Zip is required";
+            $errors["shipping_state"] = "Shipping State is required";
+        }
+
+        if (!preg_match($zipPattern, $shipping_zip)) {
+            $errors["shipping_zip"] = "shipping Zip with numbers";
+        }
+        if (empty($shipping_zip)) {
+            $errors["shipping_zip"] = "shipping Zip is required";
         }
 
 
-        if (!$errors) {
-
-            $stmt = $conn->prepare("INSERT INTO orders (billing_first_name, billing_last_name, billing_email, billing_address, billing_state, billing_zip, shipping_first_name, shipping_last_name, shipping_email, shipping_address, shipping_country, shipping_state, shipping_zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssssssssss", $billing_first_name, $billing_last_name, $billing_email, $billing_address, $billing_state, $billing_zip, $shipping_first_name, $shipping_last_name, $shipping_email, $shipping_address, $shipping_country, $shipping_state, $shipping_zip);
-
-            if ($stmt->execute()) {
-                $order_id = $stmt->insert_id;
+        if (!$errors) { // If there are no validation errors, proceed to insert the order into the database
 
 
+                // SQL query to insert order details into the "orders" table
+                $insert_order_query = "INSERT INTO orders (billing_first_name, billing_last_name, billing_email, billing_address, billing_state, billing_country, billing_zip, shipping_first_name, shipping_last_name, shipping_email, shipping_address, shipping_country, shipping_state, shipping_zip) VALUES ('$billing_first_name', '$billing_last_name', '$billing_email', '$billing_address', '$billing_country', '$billing_state', '$billing_zip', '$shipping_first_name', '$shipping_last_name', '$shipping_email', '$shipping_address', '$shipping_country', '$shipping_state', '$shipping_zip')";
 
-                //$insert_order_query = "INSERT INTO orders (billing_first_name, billing_last_name, billing_street, billing_province, billing_country, shipping_first_name, shipping_last_name, shipping_street, shipping_province, shipping_country) VALUES ('$billing_first_name', '$billing_last_name', '$billing_street', '$billing_province', '$billing_country', '$shipping_first_name', '$shipping_last_name', '$shipping_street', '$shipping_province', '$shipping_country')";
-                $insert_order_query = "INSERT INTO orders (billing_first_name, billing_last_name, billing_email, billing_address, billing_state, billing_zip, shipping_first_name, shipping_last_name, shipping_email, shipping_address, shipping_country, shipping_state, shipping_zip) VALUES ('$billing_first_name', '$billing_last_name', '$billing_email', '$billing_address', '$billing_state', '$billing_zip', '$shipping_first_name', '$shipping_last_name', '$shipping_email', '$shipping_address', '$shipping_country', '$shipping_state', '$shipping_zip')";
-
+                // Execute the order insertion query
                 if ($conn->query($insert_order_query) === TRUE) {
                     $order_id = $conn->insert_id;
 
-                    var_dump($_SESSION);
+                    var_dump($_SESSION); // Debugging: Display session data
 
+                    // Process each product in the cart
                     if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                         foreach ($_SESSION['cart'] as $product_id => $quantity) {
                             $query = "SELECT * FROM products WHERE product_id = '$product_id'";
@@ -234,17 +188,14 @@
                                     echo "Error inserting item: " . $conn->error;
                                 }
                             }
-                            // else {
-                            //     echo "Product not found for product ID: $product_id<br>";
-                            // }
+                            
                         }
-                        // die();
-                        
-                        $_SESSION['cart'] = array();
+                                               
+                        $_SESSION['cart'] = array(); // Clear the cart
 
                         echo "Order placed successfully!";
 
-                        header("Location: index.php");
+                        header("Location: index.php"); // Redirect to the homepage
                         
                         exit(); 
 
@@ -255,16 +206,7 @@
                             $stmt->close();
                         }
                     }
-        //                 $_SESSION['cart'] = array();
-
-        //                 echo "Order placed successfully!";
-
-        //                 header("Location: index.php");
-        //                 exit();
-        //             }
-        //         }
-        //     }
-        // } 
+         
             } else {
                 echo '<ul>';
                 foreach ($errors as $error) {
@@ -273,48 +215,16 @@
                 echo '</ul>';
             }
 
-    }
-
-    // $conn->close();
     ?>
-
- <!-- <form class="checkout" action="checkout.php" method="post">
-
-     <h2>Billing Address</h2>
-
-     <input type="text" name="billing_first_name" placeholder="First Name:" value="<?php echo $billing_first_name; ?>"><br>
-     <input type="text" name="billing_last_name" placeholder="Last Name:" value="<?php echo $billing_last_name; ?>"><br>
-     <input type="text" name="billing_street" placeholder="Street:" value="<?php echo $billing_street; ?>"><br>
-     <input type="text" name="billing_province" placeholder="Province:" value="<?php echo $billing_province; ?>"><br>
-     <input type="text" name="billing_country" placeholder="Country:" value="<?php echo $billing_country; ?>"><br>
-
-     <h2>Shipping Address</h2>
-
-     <input type="text" name="shipping_first_name" placeholder="First Name:" value="<?php echo $shipping_first_name; ?>"><br>
-     <input type="text" name="shipping_last_name" placeholder="Last Name:" value="<?php echo $shipping_last_name; ?>"><br>
-     <input type="text" name="shipping_street" placeholder="Street:" value="<?php echo $shipping_street; ?>"><br>
-     <input type="text" name="shipping_province" placeholder="Province:" value="<?php echo $shipping_province; ?>"><br>
-     <input type="text" name="shipping_country" placeholder="Country:" value="<?php echo $shipping_country; ?>"><br>
-
-     <br>
-     <button type="submit" name="checkout" class="submit">Place Order</button>
-     <hr>
- </form> -->
-
- <main>
+<!-- HTML content for the main page including Billing adress and Shipping adress -->
+<main>
     <div class="container">
  
-        <!-- <div class="py-5 text-center">
-
-            <h2>Checkout form</h2>
-
-        </div> -->
-
-        <div class="row g-5">
+    <div class="row g-5">
 
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">Billing address</h4>
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" novalidate="" method="post">
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" name="billing_first_name" class="form-label">First name</label>
@@ -348,11 +258,6 @@
                                 Please enter your shipping address.
                             </div>
                         </div>
-
-                        <!-- <div class="col-12">
-                            <label for="address2" class="form-label">Address 2 <span class="text-body-secondary">(Optional)</span></label>
-                            <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" value="<?php echo $billing_address; ?>">
-                        </div> -->
 
                         <div class="col-md-5">
                             <label for="country" class="form-label">Country</label>
@@ -420,11 +325,6 @@
                             </div>
                         </div>
 
-                        <!-- <div class="col-12">
-                            <label for="address2" class="form-label">Address 2 <span class="text-body-secondary">(Optional)</span></label>
-                            <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" value="<?php echo $shipping_address; ?>">
-                        </div> -->
-
                         <div class="col-md-5">
                             <label for="country" class="form-label">Country</label>
                             <input type="text" class="form-control" id="country" name="shipping_country" placeholder="Country" required="" value="<?php echo $shipping_country; ?>">
@@ -453,12 +353,12 @@
 
                     <br>
                     <button class="w-100 btn btn-primary btn-lg" type="submit" name="checkout">Place Order</button>
-                </form>
-            </div>
-        </div>
-    </div>
+                </form> <!-- I am closing the column -->
+            </div> <!-- I am closing the column -->
+        </div> <!-- I am closing the column -->
+     </div> <!-- I am closing the column -->
 
     
  </main>
 
- <?php include("footer.php"); ?>
+ <?php include("footer.php"); ?> <!-- I am including the footer.php external file to load some html -->
