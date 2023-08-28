@@ -1,5 +1,5 @@
 <?php
-include("db.inc.php"); // The code is including a db.inc.php file that contains the database connection code
+include("header.php");  // The code is including the header.php external file and load some html from it
 
 // I am creating the 'orders' table
 
@@ -34,11 +34,22 @@ CREATE TABLE order_items (
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 )";
 
-if ($conn->query($create_orders_table) === TRUE && $conn->query($create_order_items_table) === TRUE) { // I am executing the create tables queries and checking whether it is working
+// I am creating the pages
+$create_pages_table = "
+CREATE TABLE pages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+
+if ($conn->query($create_orders_table) === TRUE && $conn->query($create_order_items_table) === TRUE && $conn->query($create_pages_table) === TRUE) { // I am executing the create tables queries and checking whether it is working
     echo "Tables created successfully.";
 } else {
     echo "Error creating tables: " . $conn->error;
 }
 
 $conn->close(); // I am closing the database connection
+
+ include("footer.php");   // I am including the footer.php external file to load some html 
 ?>

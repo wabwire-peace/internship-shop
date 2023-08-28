@@ -23,12 +23,15 @@
       </div> <!-- This is a closing div for the col to logo area -->
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> <!-- I am creating navigation menu -->
-        <li><a href="index.php" class="nav-link px-2 link-secondary"><b>Products</b></a></li> <!-- I am creating a link to the Products -->
-        
+            <li><a href="index.php" class="nav-link px-2 link-secondary"><b>Products</b></a></li> <!-- I am creating a link to the Products -->
+            <li><a href="page.php?id=1" class="nav-link px-2 link-secondary"><b>About Us</b></a></li><br>
       </ul>
-
+            
+      </ul>
+      <div class="text-end">
+          <a href="page.php?id=2" class="nav-link px-2 link-secondary"><b>Contact Us</b></a></div><br>
       <div class="col-md-3 text-end"> <!-- I am creating area on the right side of the header -->
-      <a href="cart.php" class="btn btn-outline-primary me-2"><b>Cart</b></a> <!-- I am creating a link to the cart.php with a styled button -->
+        <a href="cart.php" class="btn btn-outline-primary me-2"><b>Cart</b></a> <!-- I am creating a link to the cart.php with a styled button -->
         
       </div> <!-- I am ending the div -->
     </header>  <!-- I am ending the header section -->
