@@ -44,13 +44,15 @@
             $content = "No page ID provided.";
         }
 
-       
-
 ?>
 
     <title><?php echo $title; ?></title>
 
     <h1><?php echo $title; ?></h1>
     <div><?php echo $content; ?></div>
+
+    
+
+    
 
 <?php include("footer.php"); ?> <!-- I am including the footer.php external file to load some html -->

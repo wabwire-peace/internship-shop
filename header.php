@@ -12,6 +12,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"><!-- I am putting a bootstrap link with style -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script> <!-- I am putting a bootstrap script -->
 </head>
+
+<style>
+  .me-2{
+    padding: 10px 40px;
+    border-radius: 10px;
+    color: white;
+    background: #1017e3;
+    transition: transform 0.3s, background 0.3s;
+    
+  }
+  .me-2:hover{
+    background: #1017e3;
+    transform: scale(1.1);
+    
+  }
+</style>
 <body>
 
 <div class="container"> <!-- I am opening a container div to structure the page content -->

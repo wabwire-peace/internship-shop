@@ -191,7 +191,7 @@
             }
 
     ?>
-<!-- HTML content for the main page including Billing adress and Shipping adress -->
+<!-- This is the HTML content for the main page including Billing adress and Shipping adress -->
 <main>
     <div class="container">
  
