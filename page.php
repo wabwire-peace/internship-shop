@@ -43,6 +43,26 @@
             $title = "Error";
             $content = "No page ID provided.";
         }
+        
+        if (isset($_POST['form_submit'])) {
+            if (isset($_POST['message'])) {
+                $to = 'wabwire.peace@osf.digital';
+                $subject = 'New order created';
+                $message = 'Message: ' . $_POST['message'];
+        
+                $headers = "From: radugabriel78@yahoo.com\r\n";
+                $headers .= "Reply-To: radugabriel78@yahoo.com\r\n";
+                $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        
+                if (mail($to, $subject, $message, $headers)) {
+                    echo "Email sent successfully!";
+                } else {
+                    echo "Email sending failed.";
+                }
+            } else {
+                echo "No message provided.";
+            }
+        }           
 
 ?>
 
@@ -50,9 +70,5 @@
 
     <h1><?php echo $title; ?></h1>
     <div><?php echo $content; ?></div>
-
-    
-
-    
 
 <?php include("footer.php"); ?> <!-- I am including the footer.php external file to load some html -->
